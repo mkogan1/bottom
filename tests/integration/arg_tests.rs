@@ -188,3 +188,12 @@ fn test_help() {
     btm_command(&["--help"]).assert().success();
     btm_command(&["-h"]).assert().success();
 }
+
+/// Test that --only_avg_cpu flag is recognized.
+#[test]
+fn test_only_avg_cpu_flag() {
+    // Just verify that the flag is recognized without error
+    btm_command(&["--only_avg_cpu", "--help"])
+        .assert()
+        .success();
+}
