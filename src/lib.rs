@@ -226,6 +226,7 @@ fn create_collection_thread(
     let use_current_cpu_total = app_config_fields.use_current_cpu_total;
     let unnormalized_cpu = app_config_fields.unnormalized_cpu;
     let show_average_cpu = app_config_fields.show_average_cpu;
+    let only_avg_cpu = app_config_fields.only_avg_cpu;
     let update_sleep = app_config_fields.update_rate;
     let get_process_threads = app_config_fields.get_process_threads;
     #[cfg(feature = "zfs")]
@@ -238,6 +239,7 @@ fn create_collection_thread(
         data_collector.set_use_current_cpu_total(use_current_cpu_total);
         data_collector.set_unnormalized_cpu(unnormalized_cpu);
         data_collector.set_show_average_cpu(show_average_cpu);
+        data_collector.set_only_avg_cpu(only_avg_cpu);
         data_collector.set_get_process_threads(get_process_threads);
         #[cfg(feature = "zfs")]
         data_collector.set_free_arc_mem(get_arc_free);

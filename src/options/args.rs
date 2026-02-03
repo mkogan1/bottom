@@ -513,6 +513,14 @@ pub struct CpuArgs {
         alias = "hide-avg-cpu"
     )]
     pub hide_avg_cpu: bool,
+
+    #[arg(
+        long,
+        action = ArgAction::SetTrue,
+        help = "Shows only the average CPU usage entry.",
+        alias = "only-avg-cpu"
+    )]
+    pub only_avg_cpu: bool,
 }
 
 /// Memory argument/config options.

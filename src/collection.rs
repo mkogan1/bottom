@@ -160,6 +160,7 @@ pub struct DataCollector {
     unnormalized_cpu: bool,
     use_current_cpu_total: bool,
     show_average_cpu: bool,
+    only_avg_cpu: bool,
     get_process_threads: bool,
 
     last_list_collection_time: Instant,
@@ -212,6 +213,7 @@ impl DataCollector {
             total_rx: 0,
             total_tx: 0,
             show_average_cpu: false,
+            only_avg_cpu: false,
             widgets_to_harvest: UsedWidgets::default(),
             #[cfg(feature = "battery")]
             battery_manager: None,
@@ -265,6 +267,10 @@ impl DataCollector {
 
     pub fn set_show_average_cpu(&mut self, show_average_cpu: bool) {
         self.show_average_cpu = show_average_cpu;
+    }
+
+    pub fn set_only_avg_cpu(&mut self, only_avg_cpu: bool) {
+        self.only_avg_cpu = only_avg_cpu;
     }
 
     pub fn set_get_process_threads(&mut self, get_process_threads: bool) {
@@ -428,7 +434,7 @@ impl DataCollector {
     #[inline]
     fn update_cpu_usage(&mut self) {
         if self.widgets_to_harvest.use_cpu {
-            self.data.cpu = cpu::get_cpu_data_list(&self.sys.system, self.show_average_cpu).ok();
+            self.data.cpu = cpu::get_cpu_data_list(&self.sys.system, self.show_average_cpu, self.only_avg_cpu).ok();
 
             #[cfg(unix)]
             {
