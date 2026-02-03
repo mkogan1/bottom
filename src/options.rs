@@ -370,6 +370,7 @@ pub(crate) fn init_app(args: BottomArgs, config: Config) -> Result<(App, BottomL
         processes.tree_collapse,
         flags.tree_collapse,
     );
+    let is_mem_sort = is_flag_enabled!(mem_sort, args.process, config);
 
     // For CPU
     let default_cpu_selection = get_default_cpu_selection(args, config);
@@ -580,6 +581,7 @@ pub(crate) fn init_app(args: BottomArgs, config: Config) -> Result<(App, BottomL
         is_command: is_default_command,
         default_sort: process_default_sort,
         sort_order: process_default_sort_order,
+        is_mem_sort,
     };
 
     for row in &widget_layout.rows {
