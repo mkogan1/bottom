@@ -61,6 +61,7 @@ see information on these options by running `btm -h`, or run `btm --help` to dis
 | `--cpu_left_legend`   | Puts the CPU chart legend on the left side.       |
 | `--default_cpu_entry` | Sets which CPU entry type is selected by default. |
 | `-a, --hide_avg_cpu`  | Hides the average CPU usage entry.                |
+| `--only_avg_cpu`      | Shows only the average CPU usage entry.           |
 
 ## Memory Options
 
