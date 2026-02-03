@@ -38,6 +38,7 @@ pub(crate) struct GeneralConfig {
     pub(crate) tree: Option<bool>,
     pub(crate) show_table_scroll_position: Option<bool>,
     pub(crate) process_command: Option<bool>,
+    pub(crate) mem_sort: Option<bool>,
     // #[cfg(any(target_os = "linux", target_os = "macos", target_os = "freebsd"))]
     pub(crate) disable_advanced_kill: Option<bool>, // This does nothing on Windows, but we leave it enabled to make the config file consistent across platforms.
     pub(crate) read_only: Option<bool>,

@@ -173,6 +173,7 @@ pub struct ProcTableConfig {
     pub is_use_regex: bool,
     pub show_memory_as_values: bool,
     pub is_command: bool,
+    pub is_mem_sort: bool,
 }
 
 /// A hacky workaround for now.
@@ -407,6 +408,13 @@ impl ProcWidgetState {
         let (default_sort_index, default_sort_order) =
             if matches!(mode, ProcWidgetMode::Tree { .. }) {
                 if let Some(index) = column_mapping.get_index_of(&ProcWidgetColumn::PidOrCount) {
+                    (index, columns[index].default_order)
+                } else {
+                    (0, columns[0].default_order)
+                }
+            } else if table_config.is_mem_sort {
+                // If mem_sort flag is set, sort by memory by default
+                if let Some(index) = column_mapping.get_index_of(&ProcWidgetColumn::Mem) {
                     (index, columns[index].default_order)
                 } else {
                     (0, columns[0].default_order)
@@ -1144,6 +1152,8 @@ impl ProcWidgetState {
     pub(crate) fn test_equality(&self, other: &Self) -> bool {
         self.mode == other.mode
             && self.proc_search.query_options == other.proc_search.query_options
+            && self.table.sort_index() == other.table.sort_index()
+            && self.table.order() == other.table.order()
             && self
                 .table
                 .columns

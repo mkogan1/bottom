@@ -374,6 +374,15 @@ pub struct ProcessArgs {
     #[arg(
         long,
         action = ArgAction::SetTrue,
+        help = "Sorts the process widget by memory usage by default.",
+        long_help = "Sorts the process widget by memory usage by default. Otherwise, it defaults to sorting by CPU usage.",
+        alias = "mem-sort"
+    )]
+    pub mem_sort: bool,
+
+    #[arg(
+        long,
+        action = ArgAction::SetTrue,
         help = "Shows the full command name instead of the process name by default.",
         alias = "process-command"
     )]

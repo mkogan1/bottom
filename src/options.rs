@@ -248,6 +248,7 @@ pub(crate) fn init_app(args: BottomArgs, config: Config) -> Result<(App, BottomL
 
     let process_memory_as_value = is_flag_enabled!(process_memory_as_value, args.process, config);
     let is_default_tree_collapsed = is_flag_enabled!(tree_collapse, args.process, config);
+    let is_mem_sort = is_flag_enabled!(mem_sort, args.process, config);
 
     // For CPU
     let default_cpu_selection = get_default_cpu_selection(args, config);
@@ -343,6 +344,7 @@ pub(crate) fn init_app(args: BottomArgs, config: Config) -> Result<(App, BottomL
         is_use_regex,
         show_memory_as_values: process_memory_as_value,
         is_command: is_default_command,
+        is_mem_sort,
     };
 
     for row in &widget_layout.rows {
