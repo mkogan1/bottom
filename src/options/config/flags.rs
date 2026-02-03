@@ -27,6 +27,7 @@ impl TableGap {
 #[cfg_attr(feature = "generate_schema", derive(schemars::JsonSchema))]
 #[cfg_attr(test, serde(deny_unknown_fields), derive(PartialEq, Eq))]
 pub(crate) struct GeneralConfig {
+    pub(crate) only_avg_cpu: Option<bool>,
     pub(crate) dot_marker: Option<bool>,
     pub(crate) rate: Option<StringOrNum>,
     pub(crate) basic: Option<bool>,
