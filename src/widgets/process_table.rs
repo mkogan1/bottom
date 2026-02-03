@@ -1758,4 +1758,34 @@ mod test {
             .len();
         assert!(filtered_tree_results == 1);
     }
+
+    /// Test that the mem_sort flag sets the default sort to memory instead of CPU
+    #[test]
+    fn test_mem_sort_default() {
+        let init_columns = [
+            ProcWidgetColumn::PidOrCount,
+            ProcWidgetColumn::Cpu,
+            ProcWidgetColumn::Mem,
+        ];
+
+        // Test default behavior (sorts by CPU)
+        let default_state = init_default_state(&init_columns);
+        let cpu_index = default_state
+            .column_mapping
+            .get_index_of(&ProcWidgetColumn::Cpu)
+            .unwrap();
+        assert_eq!(default_state.table.sort_index(), cpu_index);
+
+        // Test with mem_sort flag (sorts by memory)
+        let table_config = ProcTableConfig {
+            is_mem_sort: true,
+            ..Default::default()
+        };
+        let mem_sort_state = init_state(table_config, &init_columns);
+        let mem_index = mem_sort_state
+            .column_mapping
+            .get_index_of(&ProcWidgetColumn::Mem)
+            .unwrap();
+        assert_eq!(mem_sort_state.table.sort_index(), mem_index);
+    }
 }
