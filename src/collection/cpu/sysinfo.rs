@@ -6,6 +6,7 @@ use crate::collection::{DataCollector, error::CollectionResult};
 pub fn get_cpu_data_list(collector: &DataCollector) -> CollectionResult<CpuHarvest> {
     let sys = &collector.sys.system;
     let show_average_cpu = collector.show_average_cpu;
+    let only_avg_cpu = collector.only_avg_cpu;
 
     let mut cpus = vec![];
 
@@ -26,16 +27,19 @@ pub fn get_cpu_data_list(collector: &DataCollector) -> CollectionResult<CpuHarve
         }
     }
 
-    cpus.extend(
-        sys.cpus()
-            .iter()
-            .enumerate()
-            .map(|(i, cpu)| CpuData {
-                data_type: CpuDataType::Cpu(i),
-                usage: cpu.cpu_usage(),
-            })
-            .collect::<Vec<_>>(),
-    );
+    // Only add individual CPU data if not showing only average CPU
+    if !only_avg_cpu {
+        cpus.extend(
+            sys.cpus()
+                .iter()
+                .enumerate()
+                .map(|(i, cpu)| CpuData {
+                    data_type: CpuDataType::Cpu(i),
+                    usage: cpu.cpu_usage(),
+                })
+                .collect::<Vec<_>>(),
+        );
+    }
 
     Ok(cpus)
 }

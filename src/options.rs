@@ -450,6 +450,7 @@ pub(crate) fn init_app(args: BottomArgs, config: Config) -> Result<(App, BottomL
             .context("Update 'temperature_type' in your config file.")?,
         show_average_cpu: get_show_average_cpu(args, config),
         show_cpu_decimal: config_or!(config, cpu.show_decimal, false),
+        only_avg_cpu: get_only_avg_cpu(args, config),
         use_dot: is_flag_enabled!(dot_marker, args.general, config),
         cpu_left_legend: enabled_option_with_deprecated!(
             args.cpu.cpu_left_legend,
@@ -1019,6 +1020,19 @@ fn get_temperature(args: &BottomArgs, config: &Config) -> OptionResult<Temperatu
 
 /// Yes, this function gets whether to show average CPU (true) or not (false).
 fn get_show_average_cpu(args: &BottomArgs, config: &Config) -> bool {
+    // If only_avg_cpu is set, we must show average CPU
+    if args.cpu.only_avg_cpu {
+        return true;
+    }
+    if let Some(flags) = &config.flags {
+        if let Some(only_avg_cpu) = flags.only_avg_cpu {
+            if only_avg_cpu {
+                return true;
+            }
+        }
+    }
+
+    // Otherwise, check hide_avg_cpu
     if args.cpu.hide_avg_cpu {
         return false;
     } else if let Some(cpu) = &config.cpu {
@@ -1031,6 +1045,19 @@ fn get_show_average_cpu(args: &BottomArgs, config: &Config) -> bool {
     }
 
     true
+}
+
+/// Gets whether to show only the average CPU (true) or not (false).
+fn get_only_avg_cpu(args: &BottomArgs, config: &Config) -> bool {
+    if args.cpu.only_avg_cpu {
+        return true;
+    } else if let Some(flags) = &config.flags {
+        if let Some(only_avg_cpu) = flags.only_avg_cpu {
+            return only_avg_cpu;
+        }
+    }
+
+    false
 }
 
 // I hate this too.
