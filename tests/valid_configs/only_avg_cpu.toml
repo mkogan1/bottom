@@ -1,0 +1,2 @@
+# Test config for only_avg_cpu option
+only_avg_cpu = true

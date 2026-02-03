@@ -311,3 +311,9 @@ fn test_no_spurious_deprecated_warnings() {
         "Expected no deprecated warnings, but got: {stderr_str}"
     );
 }
+
+#[test]
+fn test_only_avg_cpu() {
+    run_and_kill(&["-C", "./tests/valid_configs/only_avg_cpu.toml"]);
+}
+
