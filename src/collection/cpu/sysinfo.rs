@@ -6,7 +6,7 @@ use sysinfo::System;
 use super::{CpuData, CpuDataType, CpuHarvest};
 use crate::collection::error::CollectionResult;
 
-pub fn get_cpu_data_list(sys: &System, show_average_cpu: bool) -> CollectionResult<CpuHarvest> {
+pub fn get_cpu_data_list(sys: &System, show_average_cpu: bool, only_avg_cpu: bool) -> CollectionResult<CpuHarvest> {
     let mut cpus = vec![];
 
     if show_average_cpu {
@@ -16,16 +16,19 @@ pub fn get_cpu_data_list(sys: &System, show_average_cpu: bool) -> CollectionResu
         })
     }
 
-    cpus.extend(
-        sys.cpus()
-            .iter()
-            .enumerate()
-            .map(|(i, cpu)| CpuData {
-                data_type: CpuDataType::Cpu(i),
-                usage: cpu.cpu_usage(),
-            })
-            .collect::<Vec<_>>(),
-    );
+    // Only add individual CPU data if not showing only average CPU
+    if !only_avg_cpu {
+        cpus.extend(
+            sys.cpus()
+                .iter()
+                .enumerate()
+                .map(|(i, cpu)| CpuData {
+                    data_type: CpuDataType::Cpu(i),
+                    usage: cpu.cpu_usage(),
+                })
+                .collect::<Vec<_>>(),
+        );
+    }
 
     Ok(cpus)
 }

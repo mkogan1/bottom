@@ -195,3 +195,9 @@ fn test_proc_columns() {
 fn test_linux_only() {
     run_and_kill(&["-C", "./tests/valid_configs/os_specific/linux.toml"]);
 }
+
+#[test]
+fn test_only_avg_cpu() {
+    run_and_kill(&["-C", "./tests/valid_configs/only_avg_cpu.toml"]);
+}
+

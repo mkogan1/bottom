@@ -8,6 +8,7 @@ use super::StringOrNum;
 #[cfg_attr(test, serde(deny_unknown_fields), derive(PartialEq, Eq))]
 pub(crate) struct GeneralConfig {
     pub(crate) hide_avg_cpu: Option<bool>,
+    pub(crate) only_avg_cpu: Option<bool>,
     pub(crate) dot_marker: Option<bool>,
     pub(crate) temperature_type: Option<String>,
     pub(crate) rate: Option<StringOrNum>,
