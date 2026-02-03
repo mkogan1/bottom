@@ -39,6 +39,7 @@ see information on these options by running `btm -h`, or run `btm --help` to dis
 | `--hide_k_threads`          | Hide kernel threads by default.                                                        |
 | `--process_memory_as_value` | Defaults to showing process memory usage by value.                                     |
 | `--process_command`         | Shows the full command name instead of the process name by default.                    |
+| `--mem_sort`                | Sorts the process widget by memory usage by default.                                   |
 | `-R, --regex`               | Enables regex by default while searching.                                              |
 | `-T, --tree`                | Makes the process widget use tree mode by default.                                     |
 | `--tree_collapse`           | Collapse process tree by default.                                                      |
